@@ -1,2 +1,18 @@
-node_modules
+# TypeScript build files
+dist/
+*.js
+*.js.map
+
+# Ignore node_modules (dependencies)
+node_modules/
+
+# Logs et caches
+npm-debug.log
+yarn-debug.log
+.tsbuildinfo
+
+# Ignore environment variable files
 .env
+*.env
+.tsbuildinfo
+.vscode/
