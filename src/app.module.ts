@@ -4,6 +4,10 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import {  SanitizerModule } from './sanitizer/sanitizer.module';
+import { RolesModule } from './role/role.module';
+import { AuthModule } from './auth/auth.module';
+
 
 @Module({
   imports: [
@@ -32,6 +36,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
 
     UsersModule,
+    SanitizerModule,
+    RolesModule,
+    AuthModule,
+    
+
   ],
   controllers: [AppController],
   providers: [AppService],
