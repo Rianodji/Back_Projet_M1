@@ -6,8 +6,8 @@ import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update_user.dto';
 import * as bcrypt from 'bcryptjs';
-import { SanitizerService } from 'src/sanitizer/sanitizer.service';
-import { Role } from 'src/role/entities/role.entity';
+import { SanitizerService } from '../sanitizer/sanitizer.service';
+import { Role } from '../role/entities/role.entity';
 
 
 @Injectable()

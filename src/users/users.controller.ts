@@ -4,7 +4,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update_user.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 
 @ApiTags('users')  // Tag pour grouper les routes liées aux utilisateurs

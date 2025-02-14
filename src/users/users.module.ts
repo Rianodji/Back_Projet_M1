@@ -2,10 +2,10 @@ import { forwardRef, Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { SanitizerModule } from 'src/sanitizer/sanitizer.module';
+import { SanitizerModule } from '../sanitizer/sanitizer.module';
 import { UsersController } from './users.controller';
-import { AuthModule } from 'src/auth/auth.module';
-import { RolesModule } from 'src/role/role.module';
+import { AuthModule } from '../auth/auth.module';
+import { RolesModule } from '../role/role.module';
 
 @Module({
   providers: [UsersService],
