@@ -11,8 +11,9 @@ import { LeagueModule } from './league/league.module';
 import { SaisonModule } from './saison/saison.module';
 import { JourneeModule } from './journee/journee.module';
 import { InscriptionModule } from './inscription/inscription.module';
-
-
+import { ArbitreModule } from './arbitre/arbitre.module';
+import { EquipesModule } from './equipes/equipes.module';
+import { OfficielsModule } from './officiels/officiels.module';
 
 @Module({
   imports: [
@@ -48,6 +49,9 @@ import { InscriptionModule } from './inscription/inscription.module';
     SaisonModule,
     JourneeModule,
     InscriptionModule,
+    ArbitreModule,
+    EquipesModule,
+    OfficielsModule,
 
   ],
   controllers: [AppController],
