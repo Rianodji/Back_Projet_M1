@@ -14,7 +14,7 @@ import { RolesModule } from '../role/role.module';
     TypeOrmModule.forFeature([User]), 
     forwardRef(() => SanitizerModule),
     forwardRef(() => AuthModule),
-    forwardRef(() => RolesModule),  // ✅ Correction ici (une seule importation)
+    forwardRef(() => RolesModule),  // ✅ une seule importation
   ],
   controllers: [UsersController],
 })

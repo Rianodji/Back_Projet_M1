@@ -8,6 +8,10 @@ import {  SanitizerModule } from './sanitizer/sanitizer.module';
 import { RolesModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { LeagueModule } from './league/league.module';
+import { SaisonModule } from './saison/saison.module';
+import { JourneeModule } from './journee/journee.module';
+import { InscriptionModule } from './inscription/inscription.module';
+
 
 
 @Module({
@@ -41,7 +45,9 @@ import { LeagueModule } from './league/league.module';
     RolesModule,
     AuthModule,
     LeagueModule,
-    
+    SaisonModule,
+    JourneeModule,
+    InscriptionModule,
 
   ],
   controllers: [AppController],

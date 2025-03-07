@@ -1,5 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from 'typeorm';
+import { 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  Column, CreateDateColumn, 
+  UpdateDateColumn, 
+  ManyToMany,
+  OneToMany, 
+  JoinTable,
+} from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
+import { League } from '../../league/entities/league.entity';  // Import de League
+
+
+
 
 @Entity()
 export class User {
@@ -43,4 +55,8 @@ export class User {
         email: this.email
       };
     }
+  
+  // Relation OneToMany avec League (un utilisateur peut être associé à plusieurs ligues)
+  @OneToMany(() => League, league => league.user)
+  leagues: League[];
 }
