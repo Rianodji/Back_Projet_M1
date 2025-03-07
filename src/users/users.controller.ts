@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Patch, Body, Param, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
@@ -25,6 +25,7 @@ export class UsersController {
   // Méthode pour récupérer un utilisateur par ID
   @Get(':id')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth() // Indique que l'authentification est requise
   @ApiOperation({ summary: 'Obtenir un utilisateur par ID' })  // Description de l'opération
   @ApiResponse({ status: 200, description: 'Utilisateur récupéré avec succès.' })  // Réponse si tout va bien
   @ApiResponse({ status: 404, description: 'Utilisateur non trouvé.' })  // Réponse si l'utilisateur n'est pas trouvé

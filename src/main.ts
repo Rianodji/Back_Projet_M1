@@ -8,7 +8,11 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
- 
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
 
   // Ajout du pipe de validation global
   app.useGlobalPipes(new ValidationPipe({
@@ -25,6 +29,8 @@ async function bootstrap() {
     .setVersion('1.0')  // La version de l'API
     .addTag('users')  // Ajouter un tag pour organiser les endpoints
     .addTag('auth')
+    .addTag('league')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {  SanitizerModule } from './sanitizer/sanitizer.module';
 import { RolesModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
+import { LeagueModule } from './league/league.module';
 
 
 @Module({
@@ -39,6 +40,7 @@ import { AuthModule } from './auth/auth.module';
     SanitizerModule,
     RolesModule,
     AuthModule,
+    LeagueModule,
     
 
   ],
