@@ -7,6 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {  SanitizerModule } from './sanitizer/sanitizer.module';
 import { RolesModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
+import { ArbitreModule } from './arbitre/arbitre.module';
+import { EquipesModule } from './equipes/equipes.module';
+import { OfficielsModule } from './officiels/officiels.module';
 
 @Module({
   imports: [
@@ -38,6 +41,9 @@ import { AuthModule } from './auth/auth.module';
     SanitizerModule,
     RolesModule,
     AuthModule,
+    ArbitreModule,
+    EquipesModule,
+    OfficielsModule,
     
 
   ],
