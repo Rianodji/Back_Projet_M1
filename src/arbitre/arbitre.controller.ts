@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Body, Param, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
-import { ArbitreService } from './arbitre.service';
+//import { ArbitreService } from './arbitre.service';
 import { CreateArbitreDto } from './dto/create-arbitre.dto';
 import { Arbitre } from './entities/arbitre.entity';
 import { UpdateArbitreDto } from './dto/update-arbitre.dto';
@@ -9,7 +9,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @ApiTags('arbitre')  // Tag pour grouper les routes liées aux arbitres
 @Controller('arbitre')
 export class ArbitreController {
-  constructor(private readonly arbitresService: ArbitreService) {}
+ /* constructor(private readonly arbitresService: ArbitreService) {}
 
   // Méthode pour créer un arbitre
   @Post()
@@ -45,5 +45,5 @@ export class ArbitreController {
     if (!result) {
       throw new HttpException('Aucune modification effectuée.', HttpStatus.NO_CONTENT);
     }
-  }
+  }*/
 }

@@ -1,13 +1,16 @@
 // src/journee/entities/journee.entity.ts
 import {
-     Entity, 
+    Entity, 
     PrimaryGeneratedColumn, 
     Column, 
-    ManyToOne
+    ManyToOne,
+    OneToMany
  } from 'typeorm';
 import { Saison } from '../../saison/entities/saison.entity'; // Import de l'entité Saison
+import { Match } from '../../match/entities/match.entity'; // Import de l'entité Match
 
-@Entity('journees') // Table 'journees' dans la base de données
+
+@Entity() // Table 'journees' dans la base de données
 export class Journee {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,12 +19,16 @@ export class Journee {
   numero: number; // Numéro de la journée (ex : 1, 2, 3, etc.)
 
   @Column({ type: 'date' })
-  debut: string; // Date de début de la journée
+  debut: Date; // Date de début de la journée
 
   @Column({ type: 'date' })
-  fin: string; // Date de fin de la journée
+  fin: Date; // Date de fin de la journée
 
   // Relation ManyToOne avec Saison (une journée appartient à une seule saison)
   @ManyToOne(() => Saison, saison => saison.journees)
   saison: Saison;
+
+  // Relation OneToMany avec Match
+  @OneToMany(() => Match, match => match.journee)
+  matchs: Match[];
 }

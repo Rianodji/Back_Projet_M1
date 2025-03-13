@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateArbitreDto } from './dto/create-arbitre.dto';
+/*import { CreateArbitreDto } from './dto/create-arbitre.dto';
 import { UpdateArbitreDto } from './dto/update-arbitre.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Arbitre } from './entities/arbitre.entity';
+import { Arbitre } from './entities/arbitre.entity'; */
 
 @Injectable()
 export class ArbitreService {
-  constructor(
+  /*constructor(
     @InjectRepository(Arbitre)
     private arbitreRepository: Repository<Arbitre>,
   ) {}
@@ -39,5 +39,5 @@ export class ArbitreService {
 
     // Récupère l'arbitre mis à jour
     return await this.findOneById(id);
-  }
+  }*/
 }

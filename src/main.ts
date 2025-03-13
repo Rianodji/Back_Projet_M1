@@ -30,6 +30,7 @@ async function bootstrap() {
     .addTag('users')  // Ajouter un tag pour organiser les endpoints
     .addTag('auth')
     .addTag('league')
+    .addTag('saison')
     .addBearerAuth()
     .build();
 

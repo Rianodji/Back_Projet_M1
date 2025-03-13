@@ -6,10 +6,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { LocalStrategy } from './local.strategy';
+import { LocalAuthGuard } from './local-auth.guard';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard, LocalStrategy,LocalAuthGuard],
   imports: [
     forwardRef(() => UsersModule),
     ConfigModule.forRoot({
@@ -20,6 +22,6 @@ import { JwtAuthGuard } from './jwt-auth.guard';
         signOptions: { expiresIn: '1h' },
       })
   ],
-  exports: [JwtStrategy, JwtAuthGuard]
+  exports: [AuthService,JwtStrategy, JwtAuthGuard, LocalStrategy,LocalAuthGuard]
 })
 export class AuthModule {}

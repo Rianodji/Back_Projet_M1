@@ -1,13 +1,13 @@
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { MatchService } from './match.service';
-import { CreateMatchDto } from './dto/create-match.dto';
+//import { CreateMatchDto } from './dto/create-match.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Match } from './entities/match.entity';
 
 @ApiTags('matchs')
 @Controller('matchs')
 export class MatchController {
-  constructor(private readonly matchService: MatchService) {}
+  /*constructor(private readonly matchService: MatchService) {}
 
   @Post()
   @ApiOperation({ summary: 'Créer un match' })
@@ -16,11 +16,11 @@ export class MatchController {
     description: 'Match créé avec succès',
     type: Match,
   })
-  create(@Body() createMatchDto: CreateMatchDto): Promise<Match> {
+  /*create(@Body() createMatchDto: CreateMatchDto): Promise<Match> {
     return this.matchService.create(createMatchDto);
-  }
+  }*/
 
-  @Get()
+/*  @Get()
   @ApiOperation({ summary: 'Obtenir tous les matchs' })
   @ApiResponse({
     status: 200,
@@ -44,6 +44,6 @@ export class MatchController {
   })
   findOne(@Param('id') id: number): Promise<Match> {
     return this.matchService.findOne(id);
-  }
+  }*/
 }
 

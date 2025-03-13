@@ -57,6 +57,6 @@ export class User {
     }
   
   // Relation OneToMany avec League (un utilisateur peut être associé à plusieurs ligues)
-  @OneToMany(() => League, league => league.user)
+  @OneToMany(() => League, (league) => league.user)
   leagues: League[];
 }

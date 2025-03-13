@@ -28,7 +28,7 @@ export class UsersService {
     return user; // Si l'utilisateur est trouvé, il est renvoyé
   }
 
-  // Méthode pour trouver un utilisateur par son ID
+  // Méthode pour trouver un utilisateur par email
   async findByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.findOneBy({ email }); // Recherche de l'utilisateur avec un objet de critères (ici l'id)
     if (!user) {

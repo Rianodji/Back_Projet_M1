@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { JoueurService } from './joueur.service';
-import { CreateJoueurDto } from './dto/create-joueur.dto';
+//import { CreateJoueurDto } from './dto/create-joueur.dto.ts';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Joueur } from './joueur.entity';
+import { Joueur } from './entities/joueur.entity';
 
 @ApiTags('joueur')
 @Controller('joueurs')
 export class JoueurController {
-  constructor(private readonly joueurService: JoueurService) {}
+  /*constructor(private readonly joueurService: JoueurService) {}
 
   @Post()
   @ApiOperation({ summary: 'Créer un joueur' })
@@ -44,6 +44,6 @@ export class JoueurController {
   @ApiResponse({ status: 200, description: 'Le joueur a été supprimé.' })
   remove(@Param('id') id: number): Promise<void> {
     return this.joueurService.remove(id);
-  }
+  }*/
 }
 

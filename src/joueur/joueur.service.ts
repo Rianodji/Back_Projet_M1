@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Joueur } from './joueur.entity';
-import { CreateJoueurDto } from './dto/create-joueur.dto';
+import { Joueur } from './entities/joueur.entity';
+//import { CreateJoueurDto } from './dto/create-joueur.dto.ts';
 
 @Injectable()
 export class JoueurService {
-  constructor(
+  /*constructor(
     @InjectRepository(Joueur)
     private joueurRepository: Repository<Joueur>,
   ) {}
@@ -36,6 +36,6 @@ export class JoueurService {
   // Supprimer un joueur
   async remove(id: number): Promise<void> {
     await this.joueurRepository.delete(id);
-  }
+  }*/
 }
 

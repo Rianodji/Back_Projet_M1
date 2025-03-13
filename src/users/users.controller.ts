@@ -34,6 +34,7 @@ export class UsersController {
   }
 
   // Méthode pour mettre à jour un utilisateur par ID
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   @ApiOperation({ summary: 'Mettre à jour un utilisateur' })  // Description de l'opération
   @ApiBody({ type: UpdateUserDto })  // Spécification du DTO pour le body de la requête
@@ -47,4 +48,6 @@ export class UsersController {
       throw new HttpException('Aucune modification effectuée.', HttpStatus.NO_CONTENT);
     }
   }
+
+
 }

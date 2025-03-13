@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import { SanitizerModule } from '../sanitizer/sanitizer.module';
 import { AuthModule } from '../auth/auth.module';
 import { RolesModule } from '../role/role.module';
+import { UsersController } from './users.controller';
 
 @Module({
   providers: [UsersService],
@@ -15,6 +16,6 @@ import { RolesModule } from '../role/role.module';
     forwardRef(() => AuthModule),
     forwardRef(() => RolesModule),  // ✅ une seule importation
   ],
-  controllers: [],
+  controllers: [UsersController],
 })
 export class UsersModule {}

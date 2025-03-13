@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Match } from './entities/match.entity';
-import { CreateMatchDto } from './dto/create-match.dto';
+//import { CreateMatchDto } from './dto/create-match.dto';
 
 @Injectable()
 export class MatchService {
-  constructor(
+  /*constructor(
     @InjectRepository(Match)
     private readonly matchRepository: Repository<Match>,
   ) {}
@@ -25,6 +25,6 @@ export class MatchService {
   // Trouver un match par ID
   async findOne(id: number): Promise<Match> {
     return this.matchRepository.findOne(id);
-  }
+  }*/
 }
 

@@ -1,16 +1,19 @@
 // src/saison/entities/saison.entity.ts
-import { Entity,
-   PrimaryGeneratedColumn,
-    Column, 
-    ManyToOne,
-    OneToMany
-   } from 'typeorm';
+import { 
+  Entity,
+  PrimaryGeneratedColumn,
+  Column, 
+  ManyToOne,
+  OneToMany
+  } from 'typeorm';
 import { League } from '../../league/entities/league.entity'; // Import de l'entité League
 import { Inscription } from '../../inscription/entities/inscription.entity'; // Import de Inscription
 import { Journee } from '../../journee/entities/journee.entity'; // Import de Journee
+import { Arbitrage } from './arbitrage.entity';
 
 
-@Entity('saisons') // Table 'saisons' dans la base de données
+
+@Entity() // Table 'saisons' dans la base de données
 export class Saison {
   @PrimaryGeneratedColumn()
   id: number;
@@ -42,5 +45,9 @@ export class Saison {
   // Relation OneToMany avec Journee (une saison peut avoir plusieurs journées)
   @OneToMany(() => Journee, journee => journee.saison)
   journees: Journee[];
+
+  // Relation OneToMany avec Arbitrage (une saison peut avoir plusieurs Arbitrages)
+  @OneToMany(() => Arbitrage, arbitrage => arbitrage.saison)
+  arbitrages: Arbitrage[];
 
 }

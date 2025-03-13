@@ -1,4 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  Column, 
+  CreateDateColumn, 
+  UpdateDateColumn,
+  OneToMany 
+} from 'typeorm';
+import { Inscription } from '../../inscription/entities/inscription.entity'; // Import de l'entité Inscription
+import { MatchEquipe } from './match-equipe.entity'; // Import de la table d'association
+import { Selection } from '../../selection/entities/selection.entity'; // Import de l'entité Selection
+//import { Staff } from '../../staff/entities/staff.entities';
+
+
 
 @Entity()
 export class Equipe {
@@ -17,14 +30,17 @@ export class Equipe {
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
 
-  // Méthode pour retourner une équipe avec les champs spécifiés
-  toResponseObject(): Partial<Equipe> {
-    return {
-      id: this.id,
-      nom: this.nom,
-      ville: this.ville,
-      dateCreation: this.dateCreation,
-      updatedAt: this.updatedAt,
-    };
-  }
+  // Relation OneToMany avec Inscription
+  @OneToMany(() => Inscription, inscription => inscription.equipe)
+  inscriptions: Inscription[];
+
+  // Relation OneToMany avec MatchEquipe
+  @OneToMany(() => MatchEquipe, matchEquipe => matchEquipe.equipe)
+  matchEquipes: MatchEquipe[];
+
+  // Relation OneToMany avec Selection
+  @OneToMany(() => Selection, selection => selection.equipe)
+  selections: Selection[];
+
+  
 }

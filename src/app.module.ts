@@ -13,7 +13,8 @@ import { JourneeModule } from './journee/journee.module';
 import { InscriptionModule } from './inscription/inscription.module';
 import { ArbitreModule } from './arbitre/arbitre.module';
 import { EquipesModule } from './equipes/equipes.module';
-import { OfficielsModule } from './officiels/officiels.module';
+import { SelectionModule } from './selection/selection.module';
+import { CaslModule } from './casl/casl.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { OfficielsModule } from './officiels/officiels.module';
           type: 'postgres',
           url: dbUrl,
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
+          synchronize: true, 
         };
       },
     }),
@@ -51,8 +53,8 @@ import { OfficielsModule } from './officiels/officiels.module';
     InscriptionModule,
     ArbitreModule,
     EquipesModule,
-    OfficielsModule,
-
+    SelectionModule,
+    CaslModule,
   ],
   controllers: [AppController],
   providers: [AppService],
