@@ -1,43 +1,49 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-/*import { CreateArbitreDto } from './dto/create-arbitre.dto';
-import { UpdateArbitreDto } from './dto/update-arbitre.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Arbitre } from './entities/arbitre.entity'; */
+import { Arbitre } from './entities/arbitre.entity';
+import { CreateArbitreDto } from './dto/create-arbitre.dto';
+import { UpdateArbitreDto } from './dto/update-arbitre.dto';
 
 @Injectable()
 export class ArbitreService {
-  /*constructor(
+  constructor(
     @InjectRepository(Arbitre)
-    private arbitreRepository: Repository<Arbitre>,
+    private readonly arbitreRepository: Repository<Arbitre>
   ) {}
 
-  // Créer un arbitre
   async create(createArbitreDto: CreateArbitreDto): Promise<Arbitre> {
     const arbitre = this.arbitreRepository.create(createArbitreDto);
-    return await this.arbitreRepository.save(arbitre);
+    return this.arbitreRepository.save(arbitre);
   }
 
-  // Récupérer un arbitre par son ID
-  async findOneById(id: number): Promise<Arbitre> {
-    const arbitre = await this.arbitreRepository.findOne(id);
+  async findAll(): Promise<Arbitre[]> {
+    return this.arbitreRepository.find();
+  }
+
+  async findOne(id: number): Promise<Arbitre> {
+    const arbitre = await this.arbitreRepository.findOne({ where: { id } });
     if (!arbitre) {
-      throw new NotFoundException(`Arbitre avec l'ID ${id} non trouvé.`);
+      throw new NotFoundException('Arbitre non trouvé');
     }
     return arbitre;
   }
 
-  // Mettre à jour un arbitre par son ID
   async update(id: number, updateArbitreDto: UpdateArbitreDto): Promise<Arbitre> {
-    const arbitre = await this.findOneById(id); // Vérifie si l'arbitre existe
+    const arbitre = await this.arbitreRepository.preload({
+      id,
+      ...updateArbitreDto,
+    });
+
     if (!arbitre) {
-      throw new NotFoundException(`Arbitre avec l'ID ${id} non trouvé.`);
+      throw new NotFoundException('Arbitre non trouvé');
     }
 
-    // Met à jour l'arbitre
-    await this.arbitreRepository.update(id, updateArbitreDto);
+    return this.arbitreRepository.save(arbitre);
+  }
 
-    // Récupère l'arbitre mis à jour
-    return await this.findOneById(id);
-  }*/
+  async remove(id: number): Promise<void> {
+    const arbitre = await this.findOne(id);
+    await this.arbitreRepository.remove(arbitre);
+  }
 }
