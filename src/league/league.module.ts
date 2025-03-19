@@ -6,7 +6,7 @@ import { SaisonModule } from '../saison/saison.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
-import { CaslModule } from 'casl/casl.module';
+import { CaslModule } from '../casl/casl.module';
 
 
 @Module({
