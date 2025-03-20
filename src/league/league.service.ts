@@ -27,7 +27,7 @@ export class LeagueService {
    
   
     // Récupération de l'utilisateur à partir de l'ID passé
-    const user = await this.userRepository.findOne({ where: { id: currentUser.id } });
+    const user = await this.userRepository.findOne({ where: { id: currentUser.userId } });
     if (!user) {
       throw new NotFoundException('User not found');
     }
