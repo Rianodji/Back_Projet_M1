@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateSaisonDto } from './dto/create-saison.dto';
 import { SaisonService } from './saison.service';
 import { Saison } from './entities/saison.entity';

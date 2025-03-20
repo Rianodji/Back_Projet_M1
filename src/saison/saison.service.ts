@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException, ForbiddenException, InternalServerErrorException } from '@nestjs/common';
 import { CreateSaisonDto } from './dto/create-saison.dto';
-import { User } from 'users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 import { Repository } from 'typeorm';
-import { CaslAbilityFactory } from 'casl/casl-ability.factory/casl-ability.factory';
+import { CaslAbilityFactory } from '../casl/casl-ability.factory/casl-ability.factory';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserInterface } from 'casl/interfaces/user.interface';
-import { LeagueInterface } from 'casl/interfaces/league.interface';
-import { Action } from 'casl/enums/action.enum';
+import { UserInterface } from '../casl/interfaces/user.interface';
+import { LeagueInterface } from '../casl/interfaces/league.interface';
+import { Action } from '../casl/enums/action.enum';
 import { Saison } from './entities/saison.entity';
-import { League } from 'league/entities/league.entity';
+import { League } from '../league/entities/league.entity';
 
 
 @Injectable()

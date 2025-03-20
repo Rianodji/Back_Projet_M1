@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { AbilityBuilder, createMongoAbility, MongoAbility, InferSubjects, ExtractSubjectType } from '@casl/ability';
 import { Action } from '../enums/action.enum';
-import { LeagueInterface } from 'casl/interfaces/league.interface'; 
-import { UserInterface } from 'casl/interfaces/user.interface';
+import { LeagueInterface } from '../interfaces/league.interface'; 
+import { UserInterface } from '../interfaces/user.interface';
 
 // Définition des sujets pouvant être contrôlés par les permissions CASL
 type Subjects = InferSubjects<typeof LeagueInterface | typeof UserInterface > | 'all';

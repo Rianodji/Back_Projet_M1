@@ -5,10 +5,10 @@ import { League } from './entities/league.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateLeagueDto } from './dto/create-league.dto';
 import { UpdateLeagueDto } from './dto/update-league.dto';
-import { CaslAbilityFactory } from 'casl/casl-ability.factory/casl-ability.factory';
+import { CaslAbilityFactory } from '../casl/casl-ability.factory/casl-ability.factory';
 import { Action } from '../casl/enums/action.enum';
-import { LeagueInterface } from 'casl/interfaces/league.interface';
-import { UserInterface } from 'casl/interfaces/user.interface';
+import { LeagueInterface } from '../casl/interfaces/league.interface';
+import { UserInterface } from '../casl/interfaces/user.interface';
 
 
 
@@ -27,7 +27,7 @@ export class LeagueService {
    
   
     // Récupération de l'utilisateur à partir de l'ID passé
-    const user = await this.userRepository.findOne({ where: { id: currentUser.id } });
+    const user = await this.userRepository.findOne({ where: { id: currentUser.userId } });
     if (!user) {
       throw new NotFoundException('User not found');
     }

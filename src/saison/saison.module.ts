@@ -4,11 +4,11 @@ import { SaisonService } from './saison.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Saison } from './entities/saison.entity';
 import { Arbitrage } from './entities/arbitrage.entity';
-import { ArbitreModule } from 'arbitre/arbitre.module';
-import { AuthModule } from 'auth/auth.module';
-import { CaslModule } from 'casl/casl.module';
-import { UsersModule } from 'users/users.module';
-import { LeagueModule } from 'league/league.module';
+import { ArbitreModule } from '../arbitre/arbitre.module';
+import { AuthModule } from '../auth/auth.module';
+import { CaslModule } from '../casl/casl.module';
+import { UsersModule } from '../users/users.module';
+import { LeagueModule } from '../league/league.module';
 
 @Module({
   controllers: [SaisonController],
