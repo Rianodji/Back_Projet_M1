@@ -8,7 +8,7 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   //providers: [ArbitreService], // Service pour gérer la logique métier des arbitres
-  //exports: [ArbitreService, TypeOrmModule.forFeature([Arbitre])],  // Exporte ArbitresService et l'entité Arbitre pour les utiliser dans d'autres modules
+  exports: [TypeOrmModule.forFeature([Arbitre])],  // Exporte l'entité Arbitre pour les utiliser dans d'autres modules
   imports: [
     TypeOrmModule.forFeature([Arbitre]), // Fournit l'entité Arbitre à TypeORM
     forwardRef(() => SanitizerModule), // Utilisation de forwardRef pour résoudre la dépendance circulaire si nécessaire

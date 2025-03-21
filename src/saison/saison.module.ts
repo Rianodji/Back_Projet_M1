@@ -9,18 +9,20 @@ import { AuthModule } from '../auth/auth.module';
 import { CaslModule } from '../casl/casl.module';
 import { UsersModule } from '../users/users.module';
 import { LeagueModule } from '../league/league.module';
+import { Arbitre } from 'arbitre/entities/arbitre.entity';
 
 @Module({
   controllers: [SaisonController],
   providers: [SaisonService],
-  exports:[SaisonService],
+  exports:[SaisonService, TypeOrmModule.forFeature([Saison, Arbitrage])],
   imports:[
     TypeOrmModule.forFeature([Saison, Arbitrage]),
     forwardRef(()=> ArbitreModule),
     forwardRef(()=>AuthModule),
     forwardRef(()=>CaslModule),
     forwardRef(()=>UsersModule),
-    forwardRef(()=>LeagueModule)
+    forwardRef(()=>LeagueModule),
+    forwardRef(()=>Arbitre)
   ]
 })
 export class SaisonModule {}
