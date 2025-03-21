@@ -1,49 +1,62 @@
-import { Controller, Get, Post, Patch, Body, Param, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
-//import { ArbitreService } from './arbitre.service';
+import { Controller, Get, Post, Delete, Patch, Body, Param, UseGuards, Request } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ArbitreService } from './arbitre.service';
 import { CreateArbitreDto } from './dto/create-arbitre.dto';
-import { Arbitre } from './entities/arbitre.entity';
 import { UpdateArbitreDto } from './dto/update-arbitre.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { Arbitre } from './entities/arbitre.entity';
 
-@ApiTags('arbitre')  // Tag pour grouper les routes liées aux arbitres
-@Controller('arbitre')
+@ApiTags('arbitres')
+@Controller('arbitres')
 export class ArbitreController {
- /* constructor(private readonly arbitresService: ArbitreService) {}
+  constructor(private readonly arbitreService: ArbitreService) {}
 
-  // Méthode pour créer un arbitre
   @Post()
-  @ApiOperation({ summary: 'Créer un nouvel arbitre' })  // Description de l'opération
-  @ApiBody({ type: CreateArbitreDto })  // Spécification du DTO pour le body de la requête
-  @ApiResponse({ status: 201, description: 'Arbitre créé avec succès.' })  // Réponse si tout va bien
-  @ApiResponse({ status: 400, description: 'Erreur lors de la création.' })  // Réponse en cas d'erreur
-  async create(@Body() createArbitreDto: CreateArbitreDto): Promise<Partial<Arbitre>> {
-    return this.arbitresService.create(createArbitreDto);
-  }
-
-  // Méthode pour récupérer un arbitre par ID
-  @Get(':id')
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth() // Indique que l'authentification est requise
-  @ApiOperation({ summary: 'Obtenir un arbitre par ID' })  // Description de l'opération
-  @ApiResponse({ status: 200, description: 'Arbitre récupéré avec succès.' })  // Réponse si tout va bien
-  @ApiResponse({ status: 404, description: 'Arbitre non trouvé.' })  // Réponse si l'arbitre n'est pas trouvé
-  async findOne(@Param('id') id: number): Promise<Partial<Arbitre>> {
-    return this.arbitresService.findOneById(id);
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Créer un nouvel arbitre' })
+  @ApiResponse({ status: 201, description: 'Arbitre créé avec succès.' })
+  @ApiResponse({ status: 400, description: 'Erreur lors de la création de l\'arbitre.' })
+  async create(@Body() createArbitreDto: CreateArbitreDto, @Request() req) : Promise<Partial<Arbitre>> {    
+    return  this.arbitreService.create(createArbitreDto, req.user);
   }
 
-  // Méthode pour mettre à jour un arbitre par ID
+  @Get()
+  @ApiOperation({ summary: 'Obtenir tous les arbitres de la ligue de l\'utilisateur' })
+  @ApiResponse({ status: 200, description: 'Liste des arbitres récupérée avec succès.' })
+  async findAll(@Request() req): Promise<Partial<Arbitre[]> >{    
+    return this.arbitreService.findAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Obtenir un arbitre par ID' })
+  @ApiResponse({ status: 200, description: 'Arbitre récupéré avec succès.' })
+  @ApiResponse({ status: 404, description: 'Arbitre non trouvé.' })
+  async findOne(@Param('id') id: string): Promise<Partial<Arbitre>> {
+    return this.arbitreService.findOne(+id);
+  }
+
   @Patch(':id')
-  @ApiOperation({ summary: 'Mettre à jour un arbitre' })  // Description de l'opération
-  @ApiBody({ type: UpdateArbitreDto })  // Spécification du DTO pour le body de la requête
-  @ApiResponse({ status: 200, description: 'Arbitre mis à jour avec succès.' })  // Réponse si tout va bien
-  @ApiResponse({ status: 404, description: 'Arbitre non trouvé.' })  // Réponse si l'arbitre n'existe pas
-  @ApiResponse({ status: 204, description: 'Aucune modification effectuée.' })  // Réponse si aucune modification
-  async update(@Param('id') id: number, @Body() updateArbitreDto: UpdateArbitreDto): Promise<Partial<Arbitre> | void> {
-    const result = await this.arbitresService.update(id, updateArbitreDto);
-    
-    if (!result) {
-      throw new HttpException('Aucune modification effectuée.', HttpStatus.NO_CONTENT);
-    }
-  }*/
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Mettre à jour un arbitre' })
+  @ApiResponse({ status: 200, description: 'Arbitre mis à jour avec succès.' })
+  @ApiResponse({ status: 404, description: 'Arbitre non trouvé.' })
+  @ApiResponse({ status: 403, description: 'Non autorisé à modifier cet arbitre.' })
+  async update(@Param('id') id: number, @Body() updateArbitreDto: UpdateArbitreDto, @Request() req) : Promise<Partial<Arbitre>> {
+    return this.arbitreService.update(id, updateArbitreDto, req.user);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Supprimer un arbitre' })
+  @ApiResponse({ status: 200, description: 'Arbitre supprimé avec succès.' })
+  @ApiResponse({ status: 404, description: 'Arbitre non trouvé.' })
+  @ApiResponse({ status: 403, description: 'Non autorisé à supprimer cet arbitre.' })
+  async remove(@Param('id') id: number, @Request() req) : Promise<void> {
+   return this.arbitreService.remove(id, req.user);
+  
+}
 }

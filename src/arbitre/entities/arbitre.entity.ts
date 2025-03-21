@@ -3,10 +3,12 @@ import {
    PrimaryGeneratedColumn,
    Column, CreateDateColumn, 
    UpdateDateColumn,
-   OneToMany
+   OneToMany,
+   ManyToOne
   } from 'typeorm';
 import { Arbitrage } from '../../saison/entities/arbitrage.entity';
 import { MatchArbitre } from '../../match/entities/match-arbitre.entity'; // Import de la table d'association
+import { League } from '../../league/entities/league.entity';
 
 
 
@@ -30,4 +32,8 @@ export class Arbitre {
   // Relation OneToMany avec MatchArbitre
   @OneToMany(() => MatchArbitre, matchArbitre => matchArbitre.arbitre)
   matchArbitres: MatchArbitre[];
+
+  // Ajout de la relation ManyToOne avec League
+  @ManyToOne(() => League, league => league.arbitres, { nullable: false, onDelete: 'CASCADE' }) // Un arbitre appartient à une seule ligue et il est supprimé si la ligue est supprimée
+  league: League;
 }

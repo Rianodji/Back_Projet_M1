@@ -1,19 +1,22 @@
-import { forwardRef, Module } from '@nestjs/common';
-//import { ArbitreService } from './arbitre.service';
+import { Module, forwardRef} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Arbitre } from './entities/arbitre.entity';
-import { SanitizerModule } from '../sanitizer/sanitizer.module';
-//import { ArbitreController } from './arbitre.controller';
+import { ArbitreController } from './arbitre.controller';
+import { ArbitreService } from './arbitre.service';
+import { LeagueModule } from '../league/league.module';
 import { AuthModule } from '../auth/auth.module';
+import { CaslModule } from '../casl/casl.module';
 
 @Module({
-  //providers: [ArbitreService], // Service pour gérer la logique métier des arbitres
-  exports: [TypeOrmModule.forFeature([Arbitre])],  // Exporte l'entité Arbitre pour les utiliser dans d'autres modules
+
+  controllers: [ArbitreController],
+  providers: [ArbitreService],
   imports: [
-    TypeOrmModule.forFeature([Arbitre]), // Fournit l'entité Arbitre à TypeORM
-    forwardRef(() => SanitizerModule), // Utilisation de forwardRef pour résoudre la dépendance circulaire si nécessaire
-    forwardRef(() => AuthModule), // Utilisation de forwardRef pour gérer la dépendance avec le module d'authentification
+    TypeOrmModule.forFeature([Arbitre]), 
+    forwardRef(() => LeagueModule),
+    forwardRef(() => AuthModule),
+    forwardRef(() => CaslModule),
   ],
-  //controllers: [ArbitreController], // Le contrôleur pour les routes liées aux arbitres
+  exports: [ArbitreService,TypeOrmModule.forFeature([Arbitre])]
 })
 export class ArbitreModule {}

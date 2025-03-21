@@ -8,7 +8,8 @@ import {
   } from 'typeorm';
 import { Saison } from '../../saison/entities/saison.entity'; // Import de l'entité Saison
 import { User } from '../../users/entities/user.entity';  // Import de User
-
+import { Arbitre } from '../../arbitre/entities/arbitre.entity'; // Import de Arbitre
+import { Equipe } from '../../equipes/entities/equipes.entity'; // Import de Equipe
 
 @Entity() 
 export class League {
@@ -32,6 +33,12 @@ export class League {
   // Relation OneToMany avec Saison
   @OneToMany(() => Saison, saison => saison.league)
   saisons: Saison[];
-
   
+  // Ajout de la relation entre League et Arbitre
+  @OneToMany(() => Arbitre, arbitre => arbitre.league)
+  arbitres: Arbitre[];
+  // relation oneToMany avec equipe
+  @OneToMany(() => Equipe, equipe => equipe.league)
+  equipes: Equipe[];
+
 }
