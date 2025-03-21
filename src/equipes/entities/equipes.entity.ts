@@ -4,13 +4,13 @@ import {
   Column, 
   CreateDateColumn, 
   UpdateDateColumn,
-  OneToMany 
+  OneToMany, 
+  ManyToOne
 } from 'typeorm';
 import { Inscription } from '../../inscription/entities/inscription.entity'; // Import de l'entité Inscription
 import { MatchEquipe } from './match-equipe.entity'; // Import de la table d'association
 import { Selection } from '../../selection/entities/selection.entity'; // Import de l'entité Selection
-//import { Staff } from '../../staff/entities/staff.entities';
-
+import { League } from '../../league/entities/league.entity'; // Import de l'entité Selection
 
 
 @Entity()
@@ -41,6 +41,8 @@ export class Equipe {
   // Relation OneToMany avec Selection
   @OneToMany(() => Selection, selection => selection.equipe)
   selections: Selection[];
+//relation ManyToOne avec League
+  @ManyToOne(() => League, league => league.equipes)
+  league: League;
 
-  
 }
