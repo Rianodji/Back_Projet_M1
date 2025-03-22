@@ -55,8 +55,8 @@ export class ArbitreController {
   @ApiResponse({ status: 200, description: 'Arbitre supprimé avec succès.' })
   @ApiResponse({ status: 404, description: 'Arbitre non trouvé.' })
   @ApiResponse({ status: 403, description: 'Non autorisé à supprimer cet arbitre.' })
-  async remove(@Param('id') id: number, @Request() req) : Promise<void> {
-   return this.arbitreService.remove(id, req.user);
-  
+  async remove(@Param('id') id: number, @Request() req): Promise<{ message: string }> {
+  await this.arbitreService.remove(id, req.user);
+  return { message: 'Arbitre supprimé avec succès.' };
 }
 }

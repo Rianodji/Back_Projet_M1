@@ -45,7 +45,7 @@ export class EquipesController {
   @ApiOperation({ summary: 'Mettre à jour une équipe' })
   @ApiResponse({ status: 200, description: 'Équipe mise à jour avec succès.' })
   @ApiResponse({ status: 404, description: 'Équipe non trouvée.' })
-  async update(@Param('id') id: number, @Body() updateEquipeDto: UpdateEquipeDto, @Request() req): Promise<Equipe> {
+  async update(@Param('id') id: number, @Body() updateEquipeDto: UpdateEquipeDto, @Request() req): Promise<Partial<Equipe> >{
     return this.equipesService.update(id, updateEquipeDto, req.user);
   }
 
