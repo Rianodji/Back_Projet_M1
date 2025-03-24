@@ -62,7 +62,7 @@ export class ArbitreService {
     let arbitreSaved;
 
   try {
-    arbitreSaved =  this.arbitreRepository.save(newArbitre);
+    arbitreSaved = await this.arbitreRepository.save(newArbitre);
   }
   catch (error) {
     throw new InternalServerErrorException('Erreur lors de la création de l\'arbitre');
