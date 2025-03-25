@@ -16,7 +16,7 @@ import { CaslModule } from '../casl/casl.module';
   imports: [
     TypeOrmModule.forFeature([League]),
     forwardRef(() => SaisonModule),
-    forwardRef(() => UsersModule),  // Assurer que UsersModule est bien importé
+    forwardRef(() => UsersModule),  
     forwardRef(() => AuthModule),
     forwardRef(()=>CaslModule)
   ],

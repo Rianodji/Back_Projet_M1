@@ -15,6 +15,7 @@ import { ArbitreModule } from './arbitre/arbitre.module';
 import { EquipesModule } from './equipes/equipes.module';
 import { SelectionModule } from './selection/selection.module';
 import { CaslModule } from './casl/casl.module';
+import { StatsModule } from './stats/stats.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { CaslModule } from './casl/casl.module';
     EquipesModule,
     SelectionModule,
     CaslModule,
+    StatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
