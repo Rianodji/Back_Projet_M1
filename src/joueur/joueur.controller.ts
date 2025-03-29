@@ -1,49 +1,61 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, UseGuards, Request } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { JoueurService } from './joueur.service';
-//import { CreateJoueurDto } from './dto/create-joueur.dto.ts';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { CreateJoueurDto } from './dto/create-joueur.dto';
+import { UpdateJoueurDto } from './dto/update-joueur.dto';
 import { Joueur } from './entities/joueur.entity';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-@ApiTags('joueur')
+@ApiTags('joueurs')
 @Controller('joueurs')
 export class JoueurController {
-  /*constructor(private readonly joueurService: JoueurService) {}
+  constructor(private readonly joueurService: JoueurService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Créer un joueur' })
-  @ApiResponse({ status: 201, description: 'Le joueur a été créé.', type: Joueur })
-  @ApiResponse({ status: 400, description: 'Mauvaise requête' })
-  create(@Body() createJoueurDto: CreateJoueurDto): Promise<Joueur> {
-    return this.joueurService.create(createJoueurDto);
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Créer un nouveau joueur' })
+  @ApiBody({ type: CreateJoueurDto })
+  @ApiResponse({ status: 201, description: 'Joueur créé avec succès.' })
+  async create(@Body() createJoueurDto: CreateJoueurDto, @Request() req): Promise<Joueur> {
+    return this.joueurService.create(createJoueurDto, req.user);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Récupérer tous les joueurs' })
-  @ApiResponse({ status: 200, description: 'Retourne la liste de tous les joueurs.', type: [Joueur] })
-  findAll(): Promise<Joueur[]> {
+  @ApiOperation({ summary: 'Obtenir la liste de tous les joueurs' })
+  @ApiResponse({ status: 200, description: 'Liste des joueurs récupérée avec succès.' })
+  async findAll(): Promise<Joueur[]> {
     return this.joueurService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Récupérer un joueur par son ID' })
-  @ApiResponse({ status: 200, description: 'Retourne un joueur', type: Joueur })
-  @ApiResponse({ status: 404, description: 'Joueur non trouvé' })
-  findOne(@Param('id') id: number): Promise<Joueur> {
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Obtenir un joueur par ID' })
+  @ApiResponse({ status: 200, description: 'Joueur récupéré avec succès.' })
+  @ApiResponse({ status: 404, description: 'Joueur non trouvé.' })
+  async findOne(@Param('id') id: number): Promise<Joueur> {
     return this.joueurService.findOne(id);
   }
 
-  @Put(':id')
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Mettre à jour un joueur' })
-  @ApiResponse({ status: 200, description: 'Le joueur a été mis à jour.', type: Joueur })
-  update(@Param('id') id: number, @Body() updateJoueurDto: CreateJoueurDto): Promise<Joueur> {
-    return this.joueurService.update(id, updateJoueurDto);
+  @ApiResponse({ status: 200, description: 'Joueur mis à jour avec succès.' })
+  @ApiResponse({ status: 404, description: 'Joueur non trouvé.' })
+  async update(@Param('id') id: number, @Body() updateJoueurDto: UpdateJoueurDto, @Request() req): Promise<Joueur> {
+    return this.joueurService.update(id, updateJoueurDto, req.user);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Supprimer un joueur' })
-  @ApiResponse({ status: 200, description: 'Le joueur a été supprimé.' })
-  remove(@Param('id') id: number): Promise<void> {
-    return this.joueurService.remove(id);
-  }*/
+  @ApiResponse({ status: 200, description: 'Joueur supprimé avec succès.' })
+  @ApiResponse({ status: 404, description: 'Joueur non trouvé.' })
+  async remove(@Param('id') id: number, @Request() req): Promise<{ message: string }> {
+    await this.joueurService.remove(id, req.user);
+    return { message: 'Joueur supprimé avec succès.' };
+  }
 }
 

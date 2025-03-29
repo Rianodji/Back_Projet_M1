@@ -3,6 +3,7 @@ import { AbilityBuilder, createMongoAbility, MongoAbility, InferSubjects, Extrac
 import { Action } from '../enums/action.enum';
 import { LeagueInterface } from '../interfaces/league.interface'; 
 import { UserInterface } from '../interfaces/user.interface';
+import { JoueurInterface } from '../interfaces/joueur.interface';
 
 // Définition des sujets pouvant être contrôlés par les permissions CASL
 type Subjects = InferSubjects<typeof LeagueInterface | typeof UserInterface > | 'all';
@@ -29,6 +30,7 @@ export class CaslAbilityFactory {
         // L'administrateur a un accès total sur les ligues et les utilisateurs
         can(Action.Manage, LeagueInterface);
         can(Action.Manage, UserInterface);
+        can(Action.Manage, JoueurInterface);
       } else if (user.roles.includes("manager")) {
         // Le manager peut lire et mettre à jour ses informations, mais ne peut pas supprimer son compte
         can(Action.Read, UserInterface, { id: user.id });
