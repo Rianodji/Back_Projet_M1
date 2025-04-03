@@ -34,6 +34,6 @@ export class Arbitre {
   matchArbitres: MatchArbitre[];
 
   // Ajout de la relation ManyToOne avec League
-  @ManyToOne(() => League, league => league.arbitres, { nullable: false, onDelete: 'CASCADE' }) // Un arbitre appartient à une seule ligue et il est supprimé si la ligue est supprimée
+  @ManyToOne(() => League, league => league.arbitres, { nullable: true, onDelete: 'CASCADE' }) // Un arbitre appartient à une seule ligue et il est supprimé si la ligue est supprimée
   league: League;
 }

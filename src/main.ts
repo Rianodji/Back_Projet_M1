@@ -31,6 +31,7 @@ async function bootstrap() {
     .addTag('auth')
     .addTag('league')
     .addTag('saisons')
+    .addTag('arbitres')
     .addBearerAuth()
     .build();
 

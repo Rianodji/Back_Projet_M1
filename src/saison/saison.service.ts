@@ -13,6 +13,7 @@ import { UpdateSaisonDto } from './dto/update-saison.dto';
 import { CreateArbitrageDto } from './dto/create-arbitrage.dto';
 import { Arbitrage } from './entities/arbitrage.entity';
 import { Arbitre } from 'arbitre/entities/arbitre.entity';
+import { DeleteArbitrageDto } from './dto/delete-arbitrage.dto';
 
 
 @Injectable()
@@ -253,11 +254,20 @@ export class SaisonService {
         const arbitreId = createArbitrageDto.arbitreId;
     
         // 3️⃣ Récupération de l'arbitre dans la base de données
-        const arbitre = await this.arbitreRepository.findOne({ where: { id: arbitreId } });
+        const arbitre = await this.arbitreRepository.findOne({ 
+            where: { id: arbitreId },
+            relations:['league']
+         });
+
     
         // 4️⃣ Vérifier si l'arbitre existe
         if (!arbitre) {
             throw new NotFoundException("Arbitre non trouvé.");
+        }
+
+        // Vérifier si l'arbitre a une ligue associée
+        if (!arbitre.league) {
+            throw new BadRequestException("Cet arbitre n'est pas associé à une ligue.");
         }
     
         // 5️⃣ Vérifier que l'ID de la saison est bien fourni dans le DTO
@@ -276,6 +286,11 @@ export class SaisonService {
         // 7️⃣ Vérifier si la saison existe
         if (!saison) {
             throw new NotFoundException("Saison non trouvée.");
+        }
+
+        // Comparer la ligue de l'arbitre avec celle de la saison
+        if (arbitre.league.id !== saison.league.id) {
+            throw new BadRequestException("L'arbitre ne peut être ajouté que dans une saison appartenant à sa ligue.");
         }
     
         const league = saison.league;

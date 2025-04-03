@@ -16,6 +16,7 @@ import {
   import { SaisonService } from './saison.service';
   import { Saison } from './entities/saison.entity';
 import { CreateArbitrageDto } from './dto/create-arbitrage.dto';
+import { DeleteArbitrageDto } from './dto/delete-arbitrage.dto';
   
   @ApiTags('saisons') // Regroupe les endpoints sous l'onglet "Saisons" dans Swagger
   @Controller('saison')
@@ -40,7 +41,7 @@ import { CreateArbitrageDto } from './dto/create-arbitrage.dto';
       async getOne(@Param('id') id: string): Promise<Partial<Saison>> {
           return this.saisonService.findOne(+id);
       }
-  
+
       // Récupérer toutes les saisons (public)
       @Get()
       @ApiOperation({ summary: 'Récupérer toutes les saisons' })
@@ -85,4 +86,6 @@ import { CreateArbitrageDto } from './dto/create-arbitrage.dto';
     async addArbitreToSaison(@Body() createArbitrageDto: CreateArbitrageDto, @Request() req): Promise<any> {
         return this.saisonService.addArbitreToSaison(createArbitrageDto, req.user);
     }
+
+    
   }

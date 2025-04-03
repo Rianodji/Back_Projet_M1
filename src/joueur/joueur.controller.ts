@@ -17,23 +17,22 @@ export class JoueurController {
   @ApiOperation({ summary: 'Créer un nouveau joueur' })
   @ApiBody({ type: CreateJoueurDto })
   @ApiResponse({ status: 201, description: 'Joueur créé avec succès.' })
-  async create(@Body() createJoueurDto: CreateJoueurDto, @Request() req): Promise<Joueur> {
+  async create(@Body() createJoueurDto: CreateJoueurDto, @Request() req): Promise<Partial<Joueur>> {
     return this.joueurService.create(createJoueurDto, req.user);
   }
 
   @Get()
   @ApiOperation({ summary: 'Obtenir la liste de tous les joueurs' })
   @ApiResponse({ status: 200, description: 'Liste des joueurs récupérée avec succès.' })
-  async findAll(): Promise<Joueur[]> {
+  async findAll(): Promise<Partial<Joueur[]>> {
     return this.joueurService.findAll();
   }
 
   @Get(':id')
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Obtenir un joueur par ID' })
   @ApiResponse({ status: 200, description: 'Joueur récupéré avec succès.' })
   @ApiResponse({ status: 404, description: 'Joueur non trouvé.' })
-  async findOne(@Param('id') id: number): Promise<Joueur> {
+  async findOne(@Param('id') id: number): Promise<Partial<Joueur>> {
     return this.joueurService.findOne(id);
   }
 
@@ -43,7 +42,7 @@ export class JoueurController {
   @ApiOperation({ summary: 'Mettre à jour un joueur' })
   @ApiResponse({ status: 200, description: 'Joueur mis à jour avec succès.' })
   @ApiResponse({ status: 404, description: 'Joueur non trouvé.' })
-  async update(@Param('id') id: number, @Body() updateJoueurDto: UpdateJoueurDto, @Request() req): Promise<Joueur> {
+  async update(@Param('id') id: number, @Body() updateJoueurDto: UpdateJoueurDto, @Request() req): Promise<Partial<Joueur>> {
     return this.joueurService.update(id, updateJoueurDto, req.user);
   }
 
@@ -53,9 +52,8 @@ export class JoueurController {
   @ApiOperation({ summary: 'Supprimer un joueur' })
   @ApiResponse({ status: 200, description: 'Joueur supprimé avec succès.' })
   @ApiResponse({ status: 404, description: 'Joueur non trouvé.' })
-  async remove(@Param('id') id: number, @Request() req): Promise<{ message: string }> {
-    await this.joueurService.remove(id, req.user);
-    return { message: 'Joueur supprimé avec succès.' };
+  async remove(@Param('id') id: number, @Request() req): Promise<void> {
+    return this.joueurService.remove(id, req.user);
   }
 }
 
