@@ -6,7 +6,6 @@ import { CreateJoueurDto } from './dto/create-joueur.dto';
 import { UpdateJoueurDto } from './dto/update-joueur.dto';
 import { CaslAbilityFactory } from '../casl/casl-ability.factory/casl-ability.factory';
 import { Action } from '../casl/enums/action.enum';
-import { JoueurInterface } from '../casl/interfaces/joueur.interface';
 import { UserInterface } from '../casl/interfaces/user.interface';
 import { League } from '../league/entities/league.entity';
 import { LeagueInterface } from '../casl/interfaces/league.interface';
@@ -45,7 +44,10 @@ export class JoueurService {
       throw new NotFoundException("Ligue non trouvée");
     }
 
-    const leagueData = { id: league.id, userId: league.user.id };
+    const leagueData = new LeagueInterface();
+    leagueData.id = league.id;
+    leagueData.userId = league.user.id;
+
     if (!ability.can(Action.Update, leagueData)) {
       throw new ForbiddenException("Vous n'êtes pas autorisé à créer un joueur dans cette ligue");
     }
@@ -95,7 +97,9 @@ export class JoueurService {
     userCur.roles = currentUser.roles;
 
     const ability = this.caslAbilityFactory.createForUser(userCur);
-    const leagueData = { id: joueur.league.id, userId: joueur.league.user.id };
+    const leagueData = new LeagueInterface();
+    leagueData.id = joueur.league.id;
+    leagueData.userId = joueur.league.user.id;
 
     if (!ability.can(Action.Update, leagueData)) {
       throw new ForbiddenException("Vous n'êtes pas autorisé à modifier ce joueur");
@@ -127,10 +131,10 @@ export class JoueurService {
   
     const ability = this.caslAbilityFactory.createForUser(userCur);
   
-    const leagueData = {
-      id: joueur.league.id,
-      userId: joueur.league.user.id
-    };
+    const leagueData = new LeagueInterface(); 
+    leagueData.id = joueur.league.id;
+    leagueData.userId = joueur.league.user.id;
+
   
     // Vérification de permission
     if (!ability.can(Action.Update, leagueData)) {
