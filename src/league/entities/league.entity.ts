@@ -10,7 +10,7 @@ import { Saison } from '../../saison/entities/saison.entity'; // Import de l'ent
 import { User } from '../../users/entities/user.entity';  // Import de User
 import { Arbitre } from '../../arbitre/entities/arbitre.entity'; // Import de Arbitre
 import { Equipe } from '../../equipes/entities/equipes.entity'; // Import de Equipe
-
+import { Joueur } from '../../joueur/entities/joueur.entity'; // Import de Joueur
 @Entity() 
 export class League {
   @PrimaryGeneratedColumn()
@@ -40,5 +40,8 @@ export class League {
   // relation oneToMany avec equipe
   @OneToMany(() => Equipe, equipe => equipe.league)
   equipes: Equipe[];
-
+  // Relation OneToMany avec Joueur
+  @OneToMany(() => Joueur, joueur => joueur.league)
+  joueurs: Joueur[];
+  
 }

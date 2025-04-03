@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsDateString } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsInt, Min, isNotEmpty } from 'class-validator';
+
+import { IsDateString } from 'class-validator';
 
 export class CreateJoueurDto {
   @ApiProperty({ example: 'Rianodji', description: "Nom du joueur" })
@@ -17,5 +19,13 @@ export class CreateJoueurDto {
   @ApiProperty({ example: 'Attaquant', description: "Poste du joueur (ex: Attaquant, Défenseur, Milieu, Gardien)" })
   @IsString()
   post: string;
+
+   // Ajout de l'ID de la ligue
+   @ApiProperty({ example: 1, description: "ID de la ligue" })
+   @IsInt()
+   @Min(1)
+   @IsNotEmpty()
+   leagueId: number;
+
 }
 

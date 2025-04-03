@@ -8,24 +8,65 @@ import { CaslAbilityFactory } from '../casl/casl-ability.factory/casl-ability.fa
 import { Action } from '../casl/enums/action.enum';
 import { JoueurInterface } from '../casl/interfaces/joueur.interface';
 import { UserInterface } from '../casl/interfaces/user.interface';
+import { League } from '../league/entities/league.entity';
+import { LeagueInterface } from '../casl/interfaces/league.interface';
+
 
 @Injectable()
 export class JoueurService {
   constructor(
     @InjectRepository(Joueur)
     private readonly joueurRepository: Repository<Joueur>,
+
+    @InjectRepository(League)
+    private readonly leagueRepository: Repository<League>,
+
     private caslAbilityFactory: CaslAbilityFactory,
   ) {}
+    
+  // Création d'un joueur avec sécurisation par rapport à la ligue
+  async create(createJoueurDto: CreateJoueurDto, currentUser: any): Promise<Partial<Joueur>> {
+    if (!currentUser.userId) {
+      throw new UnauthorizedException("Utilisateur non valide");
+    }
 
-  // Création d'un joueur
-  async create(createJoueurDto: CreateJoueurDto, currentUser: any): Promise<Joueur> {
-    // Vérification ou gestion des permissions peut être ajoutée ici si nécessaire.
-    const joueur = this.joueurRepository.create(createJoueurDto);
+    const userCur = new UserInterface();
+    userCur.id = currentUser.userId;
+    userCur.roles = currentUser.roles;
+
+    const ability = this.caslAbilityFactory.createForUser(userCur);
+
+    const league = await this.leagueRepository.findOne({
+      where: { id: createJoueurDto.leagueId },
+      relations: ['user']
+    });
+
+    if (!league) {
+      throw new NotFoundException("Ligue non trouvée");
+    }
+
+    const leagueData = { id: league.id, userId: league.user.id };
+    if (!ability.can(Action.Update, leagueData)) {
+      throw new ForbiddenException("Vous n'êtes pas autorisé à créer un joueur dans cette ligue");
+    }
+
+    const joueur = this.joueurRepository.create({
+      nom: createJoueurDto.nom,
+      prenom: createJoueurDto.prenom,
+      date_naissance: createJoueurDto.date_naissance,
+      post: createJoueurDto.post,
+      league,
+    });
+
+    let joueurSaved;
     try {
-      return await this.joueurRepository.save(joueur);
+      joueurSaved = await this.joueurRepository.save(joueur);
     } catch (error) {
       throw new InternalServerErrorException("Erreur lors de la création du joueur");
     }
+
+    const { league: _, ...result } = joueurSaved;
+    return result;
   }
 
   // Récupérer tous les joueurs
@@ -44,21 +85,19 @@ export class JoueurService {
 
   // Mise à jour d'un joueur
   async update(id: number, updateJoueurDto: UpdateJoueurDto, currentUser: any): Promise<Joueur> {
-    const joueur = await this.joueurRepository.findOne({ where: { id } });
+    const joueur = await this.joueurRepository.findOne({ where: { id }, relations: ['league', 'league.user'] });
     if (!joueur) {
       throw new NotFoundException("Joueur non trouvé");
     }
 
-    // Vérification des permissions avec CASL
     const userCur = new UserInterface();
     userCur.id = currentUser.userId;
     userCur.roles = currentUser.roles;
-    const ability = this.caslAbilityFactory.createForUser(userCur);
-    const joueurData = new JoueurInterface();
-    joueurData.id = joueur.id;
-    // D'autres propriétés pouvant être utilisées pour la vérification des droits
 
-    if (!ability.can(Action.Update, joueurData)) {
+    const ability = this.caslAbilityFactory.createForUser(userCur);
+    const leagueData = { id: joueur.league.id, userId: joueur.league.user.id };
+
+    if (!ability.can(Action.Update, leagueData)) {
       throw new ForbiddenException("Vous n'êtes pas autorisé à modifier ce joueur");
     }
 
@@ -72,24 +111,39 @@ export class JoueurService {
 
   // Suppression d'un joueur
   async remove(id: number, currentUser: any): Promise<void> {
-    const joueur = await this.joueurRepository.findOne({ where: { id } });
+    // Récupération du joueur avec sa ligue et l'utilisateur propriétaire de la ligue
+    const joueur = await this.joueurRepository.findOne({ 
+      where: { id },
+      relations: ['league', 'league.user']
+    });
+  
     if (!joueur) {
-      throw new NotFoundException("Joueur non trouvé");
+      throw new NotFoundException("Joueur non trouvé.");
     }
-
-    // Vérification des permissions avec CASL
+  
     const userCur = new UserInterface();
     userCur.id = currentUser.userId;
     userCur.roles = currentUser.roles;
+  
     const ability = this.caslAbilityFactory.createForUser(userCur);
-    const joueurData = new JoueurInterface();
-    joueurData.id = joueur.id;
-
-    if (!ability.can(Action.Delete, joueurData)) {
-      throw new ForbiddenException("Vous n'êtes pas autorisé à supprimer ce joueur");
+  
+    const leagueData = {
+      id: joueur.league.id,
+      userId: joueur.league.user.id
+    };
+  
+    // Vérification de permission
+    if (!ability.can(Action.Update, leagueData)) {
+      throw new ForbiddenException("Vous n'êtes pas autorisé à supprimer ce joueur.");
     }
-
-    await this.joueurRepository.remove(joueur);
+  
+    // Suppression protégée
+    try {
+      await this.joueurRepository.remove(joueur);
+    } catch (error) {
+      throw new InternalServerErrorException("Erreur lors de la suppression du joueur");
+    }
   }
+  
 }
 

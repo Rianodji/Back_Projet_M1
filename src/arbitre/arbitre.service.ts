@@ -135,7 +135,6 @@ export class ArbitreService {
       throw new NotFoundException("Arbitre non trouvé.");
     }
 
-
      // Vérifier les permissions de l'utilisateur avant la suppression
     const userCur = new UserInterface();
     userCur.id = currentUser.userId;
