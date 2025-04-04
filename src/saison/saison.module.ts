@@ -9,7 +9,7 @@ import { AuthModule } from '../auth/auth.module';
 import { CaslModule } from '../casl/casl.module';
 import { UsersModule } from '../users/users.module';
 import { LeagueModule } from '../league/league.module';
-import { Arbitre } from 'arbitre/entities/arbitre.entity';
+import { Arbitre } from '../arbitre/entities/arbitre.entity';
 
 @Module({
   controllers: [SaisonController],

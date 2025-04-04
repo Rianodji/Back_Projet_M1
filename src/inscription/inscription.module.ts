@@ -6,7 +6,7 @@ import { InscriptionController } from './inscription.controller';
 import { EquipesModule } from '../equipes/equipes.module';
 import { JoueurModule } from '../joueur/joueur.module';
 import { AuthModule } from '../auth/auth.module';
-import { CaslModule } from 'casl/casl.module';
+import { CaslModule } from '../casl/casl.module';
 
 @Module({
   imports: [

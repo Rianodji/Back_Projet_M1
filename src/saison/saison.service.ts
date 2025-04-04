@@ -12,7 +12,7 @@ import { League } from '../league/entities/league.entity';
 import { UpdateSaisonDto } from './dto/update-saison.dto';
 import { CreateArbitrageDto } from './dto/create-arbitrage.dto';
 import { Arbitrage } from './entities/arbitrage.entity';
-import { Arbitre } from 'arbitre/entities/arbitre.entity';
+import { Arbitre } from '../arbitre/entities/arbitre.entity';
 import { DeleteArbitrageDto } from './dto/delete-arbitrage.dto';
 
 

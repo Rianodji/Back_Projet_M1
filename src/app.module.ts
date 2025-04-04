@@ -15,7 +15,7 @@ import { ArbitreModule } from './arbitre/arbitre.module';
 import { EquipesModule } from './equipes/equipes.module';
 import { SelectionModule } from './selection/selection.module';
 import { CaslModule } from './casl/casl.module';
-import { JoueurModule } from 'joueur/joueur.module';
+import { JoueurModule } from './joueur/joueur.module';
 
 @Module({
   imports: [
