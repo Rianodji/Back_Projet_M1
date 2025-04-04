@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+// MatchController sécurisé avec JwtAuthGuard et @Request pour transmettre l'utilisateur
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { MatchService } from './match.service';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { UpdateMatchDto } from './dto/update-match.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('Match')
 @Controller('match')
@@ -10,9 +12,11 @@ export class MatchController {
   constructor(private readonly matchService: MatchService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Créer un match' })
-  create(@Body() createMatchDto: CreateMatchDto) {
-    return this.matchService.create(createMatchDto);
+  create(@Body() createMatchDto: CreateMatchDto, @Request() req) {
+    return this.matchService.create(createMatchDto, req.user);
   }
 
   @Get()
@@ -28,14 +32,18 @@ export class MatchController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Mettre à jour un match' })
-  update(@Param('id') id: string, @Body() updateMatchDto: UpdateMatchDto) {
-    return this.matchService.update(+id, updateMatchDto);
+  update(@Param('id') id: string, @Body() updateMatchDto: UpdateMatchDto, @Request() req) {
+    return this.matchService.update(+id, updateMatchDto, req.user);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Supprimer un match' })
-  remove(@Param('id') id: string) {
-    return this.matchService.remove(+id);
+  remove(@Param('id') id: string, @Request() req) {
+    return this.matchService.remove(+id, req.user);
   }
 }
