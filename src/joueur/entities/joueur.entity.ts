@@ -42,7 +42,6 @@ export class Joueur {
   indisponibilites: Indisponibilite[];
 
   // Ajout de la relation avec la ligue
-  //j'ai aussi rajouter dans league.entity.ts ( à valider avec dicard)
   @ManyToOne(() => League, league => league.joueurs, { nullable: false, onDelete: 'CASCADE' })
   league: League;
 }

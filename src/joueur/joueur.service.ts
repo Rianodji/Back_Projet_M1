@@ -86,7 +86,7 @@ export class JoueurService {
   }
 
   // Mise à jour d'un joueur
-  async update(id: number, updateJoueurDto: UpdateJoueurDto, currentUser: any): Promise<Joueur> {
+  async update(id: number, updateJoueurDto: UpdateJoueurDto, currentUser: any): Promise<Partial<Joueur>> {
     const joueur = await this.joueurRepository.findOne({ where: { id }, relations: ['league', 'league.user'] });
     if (!joueur) {
       throw new NotFoundException("Joueur non trouvé");
@@ -106,11 +106,14 @@ export class JoueurService {
     }
 
     Object.assign(joueur, updateJoueurDto);
+    let joueurUpdated;
     try {
-      return await this.joueurRepository.save(joueur);
+      joueurUpdated = await this.joueurRepository.save(joueur);
     } catch (error) {
       throw new InternalServerErrorException("Erreur lors de la mise à jour du joueur");
     }
+    const { league: _, ...result } = joueurUpdated;
+    return result;
   }
 
   // Suppression d'un joueur
