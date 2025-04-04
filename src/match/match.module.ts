@@ -7,12 +7,16 @@ import { MatchService } from './match.service';
 import { Journee } from '../journee/entities/journee.entity';
 import { CaslModule } from '../casl/casl.module';
 import { AuthModule } from '../auth/auth.module';
+import { JourneeModule } from '../journee/journee.module';
+import { EquipesModule } from '../equipes/equipes.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Match, Journee]),
     forwardRef(() => CaslModule),
     forwardRef(() => AuthModule),
+    forwardRef(() => JourneeModule),
+    forwardRef(() => EquipesModule),
   ],
   controllers: [MatchController],
   providers: [MatchService],
